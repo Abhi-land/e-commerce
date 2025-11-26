@@ -1,0 +1,24 @@
+.carousel-image {
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  /* optional limit */
+  /* object-fit: cover; */
+  object-fit:fill;
+}
+
+.carousel-image>img {
+  height: 200px;
+}
+
+@media (max-width: 1024px) {
+  .carousel-image {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-image {
+    height: 300px;
+  }
+}
