@@ -5,6 +5,7 @@ import Navigation from './customer/components/Navigation/Navigation';
 import { Product } from './customer/components/Product/Product';
 import Footer from './customer/components/Footer/Footer';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProductDetail from './customer/components/ProductDetail/ProductDetail';
 
 
 
@@ -18,12 +19,12 @@ function App() {
         {/* <HomePage /> */}
         {/* <Product /> */}
 
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Product />} />
-      </Routes>
-    </BrowserRouter>
-
+        {/* <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Product />} />
+          </Routes>
+        </BrowserRouter> */}
+        <ProductDetail />
       </div>
       <Footer />
 

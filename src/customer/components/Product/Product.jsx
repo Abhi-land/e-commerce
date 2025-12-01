@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+
 import {
     Dialog,
     DialogBackdrop,
@@ -17,15 +18,16 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { Womens_Kurti } from '../../../Data/Womens_Kurti'
 import { ProductCard } from "./ProductCard"
+import { filters } from "./Productfilters"
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+// import Radio from '@mui/material/Radio';
+// import RadioGroup from '@mui/material/RadioGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useLocation, useNavigate } from "react-router-dom";
-import Checkbox from '@mui/material/Checkbox';
+// import Checkbox from '@mui/material/Checkbox';
 
 const sortOptions = [
     // { name: 'Most Popular', href: '#', current: true },
@@ -35,64 +37,22 @@ const sortOptions = [
     { name: 'Price: High to Low', href: '#', current: false },
 ]
 
-const filters = [
-    {
-        id: 'color',
-        name: 'Color',
-        options: [
-            { value: 'white', label: 'White', checked: false },
-            { value: 'beige', label: 'Beige', checked: false },
-            { value: 'blue', label: 'Blue', checked: true },
-            { value: 'brown', label: 'Brown', checked: false },
-            { value: 'green', label: 'Green', checked: false },
-            { value: 'purple', label: 'Purple', checked: false },
-        ],
-    },
-    {
-        id: 'category',
-        name: 'Category',
-        options: [
-            { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-            { value: 'sale', label: 'Sale', checked: false },
-            { value: 'travel', label: 'Travel', checked: true },
-            { value: 'organization', label: 'Organization', checked: false },
-            { value: 'accessories', label: 'Accessories', checked: false },
-        ],
-    },
-    {
-        id: 'size',
-        name: 'Size',
-        options: [
-            { value: '2l', label: '2L', checked: false },
-            { value: '6l', label: '6L', checked: false },
-            { value: '12l', label: '12L', checked: false },
-            { value: '18l', label: '18L', checked: false },
-            { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: true },
-        ],
-    },
-    {
-        id: 'Disccount Range',
-        name: 'Disccount Range',
-        options: [
-            { value: '10', label: '10 % and above', checked: false },
-            { value: '20', label: '20 % and above', checked: false },
-            { value: '70', label: '70 % and above', checked: false },
-            { value: '60', label: '60 % and above', checked: false },
-            { value: '55', label: '55 % and above', checked: false },
-            { value: '25', label: '25 % and above', checked: true },
-        ],
-    },
-    {
-        id: 'Availability',
-        name: 'Availability',
-        options: [
-            { value: 'In Stock', label: 'In Stock', checked: false },
-            { value: 'Out of Stock', label: 'Out of Stock', checked: false },
 
-        ],
-    },
-]
+
+// const Radio_filters = [
+//     {
+//         id: 'Price',
+//         name: 'Price',
+//         options: [
+//             { value: '159,399', label: '₹159 to ₹399', },
+//             { value: '399,999', label: '399 to ₹999', },
+//             { value: '999,1999', label: '₹999 to ₹1999', },
+//             { value: '1999,2999', label: '₹1999 to ₹2999', },
+//             { value: '2999,3999', label: '₹2999 to ₹3999', },
+//             { value: '3999,4999', label: '₹3999 to ₹4999', },
+//         ],
+//     }
+// ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -100,17 +60,19 @@ function classNames(...classes) {
 
 export function Product() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-    const [selected, setSelected] = useState({});
-    const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
-
+    // const [selected, setSelected] = useState({});
+    // const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
     const mylocation = useLocation();
     const navigate = useNavigate();
 
+
     const handleFilter = (Value, SectionId) => {
-        const searchParams = new URLSearchParams(mylocation);
+        const searchParams = new URLSearchParams(mylocation.search);
         let filterValue = searchParams.getAll(SectionId);
         if (filterValue.length > 0 && filterValue[0].split(",").includes(Value)) {
+
             filterValue = filterValue[0].split(",").filter((item) => item !== Value);
+
             if (filterValue.length === 0) {
                 searchParams.delete(SectionId);
             }
@@ -121,6 +83,14 @@ export function Product() {
         if (filterValue.length > 0) {
             searchParams.set(SectionId, filterValue.join(","));
         }
+        const query = searchParams.toString();
+        navigate({ search: `?${query}` });
+    }
+
+
+    const handleRadioFilterChange = (Value, SectionId) => {
+        const searchParams = new URLSearchParams(mylocation.search);
+        searchParams.set(SectionId, Value);
         const query = searchParams.toString();
         navigate({ search: `?${query}` });
     }
@@ -302,30 +272,7 @@ export function Product() {
                                             <DisclosurePanel className="pt-6">
                                                 <div className="space-y-4">
 
-                                                    {/* <FormControl>
-                                                        <RadioGroup
-                                                            aria-labelledby="radio-group"
-                                                            name={`filter-${section.id}`}
-                                                            value={selected[section.id]}
-                                                            onChange={(e) =>
-                                                                setSelected({ ...selected, [section.id]: e.target.value })
-                                                            }
-                                                        >
-
-                                                            {section.options.map((option, optionIdx) => (
-                                                                <FormControlLabel
-                                                                    onChange={() => handleFilter(option.value, section.id)}
-                                                                    key={option.value}
-                                                                    value={option.value}
-                                                                    control={<Radio />}
-                                                                    label={option.label}
-                                                                />
-                                                            ))}
-                                                        </RadioGroup>
-                                                    </FormControl> */}
-
-
-                                                    {section.options.map((option, optionIdx) => (
+                                                    {section.type === "checkbox" && (section.options.map((option, optionIdx) => (
                                                         <div key={option.value} className="flex gap-3">
                                                             <div className="flex h-5 shrink-0 items-center">
                                                                 <div className="group grid size-4 grid-cols-1">
@@ -347,17 +294,37 @@ export function Product() {
                                                                 {option.label}
                                                             </label>
                                                         </div>
-                                                    ))}
+                                                    ))
+                                                    )}
 
+                                                    {/* ---------------- RADIO FILTER ---------------- */}
+                                                    {section.type === "radio" && (
+                                                        section.options.map((option, optionIdx) => (
+                                                            <div key={option.value} className="flex gap-3">
+                                                                <input
+                                                                    type="radio"
+                                                                    name={section.id}
+                                                                    id={`filter-${section.id}-${optionIdx}`}
+                                                                    value={option.value}
+                                                                    onChange={() => handleRadioFilterChange(option.value, section.id)}
+                                                                />
+                                                                <label htmlFor={`filter-${section.id}-${optionIdx}`}>
+                                                                    {option.label}
+                                                                </label>
+                                                            </div>
+                                                        ))
+                                                    )}
                                                 </div>
                                             </DisclosurePanel>
                                         </Disclosure>
                                     ))}
+
+
                                 </form>
                             </div>
 
                             {/* Product grid */}
-                            <div className="lg:col-span-3 w-full">
+                            < div className="lg:col-span-3 w-full" >
                                 <div className='flex flex-wrap justify-center bg-white py-5' >
                                     {Womens_Kurti.map((item) => <ProductCard Product={item} />)}
                                 </div>
