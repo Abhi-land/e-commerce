@@ -6,6 +6,8 @@ import { Product } from './customer/components/Product/Product';
 import Footer from './customer/components/Footer/Footer';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProductDetail from './customer/components/ProductDetail/ProductDetail';
+import { Card } from '@mui/material';
+import Cart from './customer/components/Cart/Cart';
 
 
 
@@ -24,7 +26,8 @@ function App() {
             <Route path="/" element={<Product />} />
           </Routes>
         </BrowserRouter> */}
-        <ProductDetail />
+        {/* <ProductDetail /> */}
+        <Cart />
       </div>
       <Footer />
 

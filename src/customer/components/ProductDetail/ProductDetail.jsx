@@ -1,6 +1,10 @@
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
-import { Grid } from '@mui/material';
+import { Box, Grid, LinearProgress } from '@mui/material';
+import { ProductReviewCard } from './ProductReviewCard';
+import { Mens_Kurta } from '../../../Data/Mens_Kurta';
+import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
+import { WomenClothData } from '../../../Data/WomenClothData';
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -61,7 +65,7 @@ function classNames(...classes) {
 export default function ProductDetail() {
     return (
         <div className="bg-white">
-            <div className="pt-6">
+            <div className="pt-6 xl:px-20">
                 <nav aria-label="Breadcrumb">
                     <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                         {product.breadcrumbs.map((breadcrumb) => (
@@ -127,14 +131,14 @@ export default function ProductDetail() {
                         {/* Options */}
                         <div className="mt-4 lg:row-span-3 lg:mt-0">
                             <h2 className="sr-only">Product information</h2>
-                            <div className='flex space-x-5 item-center text-lg lg:text-xl text-gray-900 mt-6'>
+                            <div className='flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6'>
                                 <p className='font-semibold' >₹199</p>
                                 <p className='opacity-50 line-through' > ₹211 </p>
                                 <p className='text-green-600 font-semibold'>%5 off</p>
                             </div>
                             {/* Reviews */}
                             <div className="mt-6">
-                                <div className='flex item-center space-x-3'>
+                                <div className='flex items-center space-x-3'>
                                     <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
                                     <p className='opacity-50 text-sm'>42268 Ratings</p>
                                     <p className='ml-3 text-sm font-medium text-indigo-600'>7895 Reviews</p>
@@ -235,23 +239,77 @@ export default function ProductDetail() {
                     </div>
                 </section>
 
-                <h1 className='font-semibold text-lg pb-4'> Recent Review & Rating </h1>
-                <div className='border p-5' >
-                    <Grid container spacing={7} >
-                        <Grid item xs={7}>
-                            <div className='space-y-5' >
-                                <div>
-                                    <p>Raam</p>
-                                    <p>April 6,2025</p>
+
+                <section>
+                    <h1 className='font-semibold text-lg ml-2 pb-4'> Recent Review & Rating </h1>
+                    <div className='border p-5' >
+                        <Grid container columns={5} >
+                            <Grid item size={3}>
+                                <div className='space-y-5'>
+                                    {[1, 1, 1].map((item) => <ProductReviewCard />)}
+
                                 </div>
-                            </div>
-                                <Rating value={4.5} name='helf-rating' />
-                                <p>nice product i love this dress</p>
+                            </Grid>
+                            <Grid item xs={4} size={2}>
+                                <h1 className='text-xl font-semibold pb-1'>Product Ratings</h1>
+                                <div className='flex items-center space-x-3'>
+                                    <Rating value={4.6} precision={0.5} readOnly />
+                                    <p className='opacity-60' >2565 Rating</p>
+                                </div>
+                                <Box className='mt-5' >
+                                    <Grid container alignItems="center" gap={2}>
+                                        <Grid item xs={2} sx={{ flex: 1 }}>
+                                            <p>Excellent</p>
+                                        </Grid>
+                                        <Grid item xs={7} sx={{ width: "70%", flex: 2 }} >
+                                            <LinearProgress sx={{ bgcolor: "#d0d0d0", height: 10, borderRadius: 4 }} variant='determinate' value={40} color='success'   ></LinearProgress>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container alignItems="center" gap={2}>
+                                        <Grid item xs={2} sx={{ flex: 1 }} >
+                                            <p>Very Good</p>
+                                        </Grid>
+                                        <Grid item xs={7} sx={{ width: "70%", flex: 2 }}  >
+                                            <LinearProgress sx={{ bgcolor: "#d0d0d0", height: 10, borderRadius: 4 }} variant='determinate' value={35} color='primary'   ></LinearProgress>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container alignItems="center" gap={2}>
+                                        <Grid item xs={2} sx={{ flex: 1 }}>
+                                            <p>Good</p>
+                                        </Grid>
+                                        <Grid item xs={7} sx={{ width: "70%", flex: 2 }}  >
+                                            <LinearProgress sx={{ bgcolor: "#d0d0d0", height: 10, borderRadius: 4 }} variant='determinate' value={30} color='info'   ></LinearProgress>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container alignItems="center" gap={2}>
+                                        <Grid item xs={2} sx={{ flex: 1 }}>
+                                            <p>Average</p>
+                                        </Grid>
+                                        <Grid item xs={7} sx={{ width: "70%", flex: 2 }} >
+                                            <LinearProgress sx={{ bgcolor: "#d0d0d0", height: 10, borderRadius: 4 }} variant='determinate' value={25} color='warning'   ></LinearProgress>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container alignItems="center" gap={2}>
+                                        <Grid item xs={2} sx={{ flex: 1 }}>
+                                            <p>Poor</p>
+                                        </Grid>
+                                        <Grid item xs={7} sx={{ width: "70%", flex: 2 }} size={1}>
+                                            <LinearProgress sx={{ bgcolor: "#d0d0d0", height: 10, borderRadius: 4 }} variant='determinate' value={20} color='error'   ></LinearProgress>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </div>
+                    </div>
+                </section>
 
-
+                {/* similar products */}
+                <section className='pt-10' >
+                    <h1 className='py-5 text-xl font-bold' >Similer Products</h1>
+                    <div className='flex flex-wrap space-y-5' >
+                        {WomenClothData.map((item)=><HomeSectionCard WomenClothData={item} />)}
+                    </div>
+                </section>
             </div>
         </div>
     )
