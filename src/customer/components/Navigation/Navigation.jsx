@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 import { Fragment, useState } from 'react'
 import {
     Dialog,
@@ -18,9 +19,47 @@ import {
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { NavigationData as navigation } from "./NavigationData";
+import { useNavigate } from 'react-router-dom';
+// import { Avatar } from '@mui/material';
+
+
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
+import CallMadeIcon from '@mui/icons-material/CallMade';
+
+
+const handleCategoryClick = ({ category, section, item, close }) => {
+    navigation(`/${category.id}/${section.id}/${item.id}`)
+    close();
+}
 
 export default function Navigation() {
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate();
+
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const myopen = Boolean(anchorEl);
+    const handlehomepage = () => {
+        navigate("/");
+    }
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <div className="bg-white">
@@ -165,7 +204,7 @@ export default function Navigation() {
 
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
-                                <a href="#">
+                                <a href="#" onClick={handlehomepage}>
                                     <span className="sr-only">Your Company</span>
                                     <img
                                         alt=""
@@ -229,7 +268,16 @@ export default function Navigation() {
                                                                         >
                                                                             {section.items.map((item) => (
                                                                                 <li key={item.name} className="flex">
-                                                                                    <a href={item.href} className="hover:text-gray-800">
+                                                                                    <a href={item.href} className="hover:text-gray-800"
+                                                                                        onClick={() =>
+                                                                                            handleCategoryClick(
+                                                                                                category,
+                                                                                                section,
+                                                                                                item
+
+                                                                                            )
+                                                                                        }
+                                                                                    >
                                                                                         {item.name}
                                                                                     </a>
                                                                                 </li>
@@ -257,7 +305,7 @@ export default function Navigation() {
                             </PopoverGroup>
 
                             <div className="ml-auto flex items-center">
-                                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                                {/* <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                     <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         Sign in
                                     </a>
@@ -265,16 +313,108 @@ export default function Navigation() {
                                     <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         Create account
                                     </a>
-                                </div>
+                                </div> */}
 
                                 <div className="hidden lg:ml-8 lg:flex">
                                     <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
                                         <img
                                             alt=""
-                                            src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
+                                            src="https://flagsapi.com/IN/flat/64.png"
                                             className="block h-auto w-5 shrink-0"
                                         />
-                                        <span className="ml-3 block text-sm font-medium">CAD</span>
+                                        <span className="ml-3 block text-sm font-medium">IN</span>
+                                        <span className="ml-3 block text-sm font-medium">
+                                            {/* <a onClick={() => { alert("hello"); }} className="ml-3 block text-sm font-medium"><Avatar className="text-white" sx={{ width: 40, height: 40, bgcolor: "#9155fd" }}>A</Avatar> */}
+                                            <React.Fragment>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                                                    <Tooltip title="Account settings">
+                                                        <IconButton
+                                                            onClick={handleClick}
+                                                            size="small"
+                                                            sx={{ ml: 2 }}
+                                                            aria-controls={myopen ? 'account-menu' : undefined}
+                                                            aria-haspopup="true"
+                                                            aria-expanded={myopen ? 'true' : undefined}
+                                                        >
+                                                            <Avatar className="text-white" sx={{ width: 40, height: 40, bgcolor: "#9155fd" }}>A</Avatar>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </Box>
+                                                <Menu
+                                                    anchorEl={anchorEl}
+                                                    id="account-menu"
+                                                    open={myopen}
+                                                    onClose={handleClose}
+                                                    slotProps={{
+                                                        paper: {
+                                                            elevation: 0,
+                                                            sx: {
+                                                                overflow: 'visible',
+                                                                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                                                mt: 1.5,
+                                                                '& .MuiAvatar-root': {
+                                                                    width: 32,
+                                                                    height: 32,
+                                                                    ml: -0.5,
+                                                                    mr: 1,
+                                                                },
+                                                                '&::before': {
+                                                                    content: '""',
+                                                                    display: 'block',
+                                                                    position: 'absolute',
+                                                                    top: 0,
+                                                                    right: 14,
+                                                                    width: 10,
+                                                                    height: 10,
+                                                                    bgcolor: 'background.paper',
+                                                                    transform: 'translateY(-50%) rotate(45deg)',
+                                                                    zIndex: 0,
+                                                                },
+                                                            },
+                                                        },
+                                                    }}
+                                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                                >
+                                                    <MenuItem onClick={handleClose}>
+                                                        <Avatar /> Profile
+                                                    </MenuItem>
+                                                    <MenuItem onClick={() => navigate("/account/order")}>
+                                                        <CallMadeIcon className='mr-2' />
+                                                        Orders
+                                                    </MenuItem>
+                                                    <Divider />
+                                                    <MenuItem onClick={handleClose}>
+                                                        <ListItemIcon>
+                                                            <PersonAdd fontSize="small" />
+                                                        </ListItemIcon>
+                                                        Add another account
+                                                    </MenuItem>
+                                                    <MenuItem onClick={handleClose}>
+                                                        <ListItemIcon>
+                                                            <PersonIcon fontSize="small" />
+                                                        </ListItemIcon>
+                                                        Sign in
+                                                    </MenuItem>
+
+                                                    <MenuItem onClick={handleClose}>
+                                                        <ListItemIcon>
+                                                            <Settings fontSize="small" />
+                                                        </ListItemIcon>
+                                                        Settings
+                                                    </MenuItem>
+                                                    <MenuItem onClick={handleClose}>
+                                                        <ListItemIcon>
+                                                            <Logout fontSize="small" />
+                                                        </ListItemIcon>
+                                                        Logout
+                                                    </MenuItem>
+                                                </Menu>
+                                            </React.Fragment>
+
+                                            {/* </a> */}
+                                        </span>
+
                                         <span className="sr-only">, change currency</span>
                                     </a>
                                 </div>
@@ -294,7 +434,7 @@ export default function Navigation() {
                                             aria-hidden="true"
                                             className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                                         />
-                                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        
                                         <span className="sr-only">items in cart, view bag</span>
                                     </a>
                                 </div>

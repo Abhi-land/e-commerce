@@ -1,4 +1,8 @@
 import React from "react";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import IconButton from "@mui/material/IconButton";
+import Button from '@mui/material/Button';
 
 export const Cartitem = () => {
     return (
@@ -16,12 +20,24 @@ export const Cartitem = () => {
                         <p className="text-green-600 font-semibold">%5 off</p>
                     </div>
                 </div>
-            </div>
-
-            <div className="">
 
             </div>
-        </div>
+            <div className="lg:flex items-center lg:space-x-10 pt-4">
+                <div className="flex items-center space-x-2" >
+                    <IconButton>
+                        <RemoveCircleOutlineIcon />
+                    </IconButton>
+                    <span className="py-1 px-7 border rounded-sm">3</span>
+                    <IconButton sx={{ color: "RGB(145 85 253)" }}>
+                        <AddCircleOutlineIcon />
+                    </IconButton>
+                </div>
+                <div>
+                    <Button sx={{ color: "RGB(145 85 253)" }}>Remove</Button>
+                </div>
+            </div>
+
+        </div >
 
 
     )

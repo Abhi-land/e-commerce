@@ -5,6 +5,7 @@ import { ProductReviewCard } from './ProductReviewCard';
 import { Mens_Kurta } from '../../../Data/Mens_Kurta';
 import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
 import { WomenClothData } from '../../../Data/WomenClothData';
+import { useNavigate } from 'react-router-dom';
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -62,8 +63,16 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+
 export default function ProductDetail() {
+    const navigation = useNavigate();
+    const handleAddToCart = () => {
+        navigation("/cart");
+    }
+    
     return (
+
+
         <div className="bg-white">
             <div className="pt-6 xl:px-20">
                 <nav aria-label="Breadcrumb">
@@ -198,7 +207,7 @@ export default function ProductDetail() {
                                         </div>
                                     </fieldset>
                                 </div>
-                                <Button variant="contained" sx={{ px: "2rem", py: "1rem", bgcolor: "#9155fd", marginTop: "1rem" }} >ADD TO CART</Button>
+                                <Button onClick={handleAddToCart} variant="contained" sx={{ px: "2rem", py: "1rem", bgcolor: "#9155fd", marginTop: "1rem" }} >ADD TO CART</Button>
 
 
                             </form>
@@ -307,7 +316,7 @@ export default function ProductDetail() {
                 <section className='pt-10' >
                     <h1 className='py-5 text-xl font-bold' >Similer Products</h1>
                     <div className='flex flex-wrap space-y-5' >
-                        {WomenClothData.map((item)=><HomeSectionCard WomenClothData={item} />)}
+                        {WomenClothData.map((item) => <HomeSectionCard WomenClothData={item} />)}
                     </div>
                 </section>
             </div>
