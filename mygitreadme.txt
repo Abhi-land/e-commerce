@@ -20,7 +20,7 @@ git add .
 git commit -m "update"
 git push
 
-
+ 
 
 Remove all tracked files from the working directory ****************************
 git rm -r *
